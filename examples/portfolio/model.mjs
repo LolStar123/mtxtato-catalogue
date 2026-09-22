@@ -5,8 +5,8 @@ export const defaults = {
   catalogue: [],
 };
 export const controls = [
-  { key: "skill", label: "Base skill ID", type: "text" },
-  { key: "effect", label: "Effect catalogue key", type: "text" },
+  { key: "skill", label: "Base skill", type: "select", options: [] },
+  { key: "effect", label: "Catalogue effect", type: "select", options: [] },
 ];
 export function plan(catalogue, skill, effect) {
   const entry = catalogue.find((r) => r.Key === effect);

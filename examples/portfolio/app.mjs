@@ -3,7 +3,13 @@ const meta = await (await fetch("./project.json")).json();
 const catalogue = await fetch("./catalogue.json")
   .then((r) => (r.ok ? r.json() : null))
   .catch(() => null);
-if (catalogue) defaults.catalogue = catalogue;
+if (catalogue) {
+  defaults.catalogue = catalogue;
+  for (const spec of controls) {
+    if (spec.key === 'skill') spec.options = [...new Set(catalogue.map(r => r.Skill))];
+    if (spec.key === 'effect') spec.options = catalogue.map(r => r.Key);
+  }
+}
 const $ = (s) => document.querySelector(s),
   input = structuredClone(defaults);
 document.title = meta.title + " | working example";
