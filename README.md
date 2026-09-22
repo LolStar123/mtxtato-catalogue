@@ -1,43 +1,36 @@
-# mtxtato
+# MTXtato effect wardrobe
 
-Matches skills with compatible cosmetic effects and keeps the swaps organised.
+**[Open the full catalogue](https://lolstar123.github.io/mtxtato-catalogue/)**
 
-<!-- working-example:start -->
-## Try it in a minute
+Search 1,489 actual skill-effect records, inspect 1,107 bundled preview icons, choose one
+effect per skill and export a real **STATO1** configuration code for the application.
+Import an existing code to load the skill effects it contains.
 
-**[Live example](https://lolstar123.github.io/mtxtato-catalogue/)** · [Example code](examples/portfolio/model.mjs) · [Run locally](examples/portfolio/README.md) · [Atul's website](https://atul-kanodia-fieldnotes.atulswaggalicious.chatgpt.site)
+![MTXtato catalogue and loadout](examples/portfolio/preview.png)
 
-Choose a skill and catalogue entry; inspect validated swap pairs or an incompatibility result.
+Selections are checked for conflicting base-asset mappings before export. Entries without
+an asset mapping cannot be added. A missing preview is shown as missing; no replacement
+artwork is invented. Your loadout is saved in your browser.
 
-<img src="examples/portfolio/preview.png" alt="mtxtato example inputs and calculated output" width="760">
-
-<!-- working-example:end -->
-
-## The project
-
-Browse the effect catalogue, match an effect to its base skill and build the asset replacement plan. Compatibility checks keep a cosmetic selection tied to the skill it belongs to.
-
-Same skill. A completely different wardrobe.
-
-## Find your way around
-
-| Path | What is here |
-| --- | --- |
-| [examples/portfolio](examples/portfolio) | Runnable browser example and fixtures |
-| [model.mjs](examples/portfolio/model.mjs) | Actual calculation or workflow |
-| [model.test.mjs](examples/portfolio/model.test.mjs) | Reproducible checks and edge cases |
-| [PROVENANCE.md](PROVENANCE.md) | How this example relates to the full project |
-| [AGENTS.md](AGENTS.md) | Instructions for extending the example |
-
-## Quick start
+## Run
 
 ```sh
 python -m http.server 8000 --directory examples/portfolio
 node --test examples/portfolio/model.test.mjs
 ```
 
-Open http://localhost:8000. No dependencies, accounts or API keys needed.
+The share-code encoder follows the actual application's `ConfigCode.cs`: preset-relative
+newline fields, R/raw payload, base64url and its six-bit checksum. The decoder accepts both
+R/raw and D/deflate-raw payloads. Export creates a skill-only loadout, with other options left
+at normal/default. Import does not preserve unrelated options from the original code.
 
-## What is included
+| Path | Purpose |
+| --- | --- |
+| `examples/portfolio/data/catalogue.json` | Actual app skill records and asset mappings |
+| `examples/portfolio/icons` | Actual app preview artwork |
+| `examples/portfolio/model.mjs` | Share-code codec, conflict checks and skill selection |
+| `tools/browser_audit.py` | Search, real image, selection and code export/import checks |
 
-Catalogue metadata and a dry-run planner. No game bundles or paid cosmetic assets are distributed.
+The browser prepares a configuration. Applying it to a game installation happens in the
+[desktop app](https://poetato.app). Automated public browser checks run every four hours.
+Preview art retains its original ownership and is not covered by the code license.

@@ -1,16 +1,12 @@
-# Public example provenance
+# Catalogue provenance
 
-Prepared 22 September 2026 for Atul Kanodia's project portfolio.
+Data: `smoothtato-dev/assets/skin_catalog.json`, 1,489 records.
+Previews: `smoothtato-dev/assets/mtx_icons`, 1,107 matching files. Other entries explicitly
+show no preview. Original icon URLs remain in the metadata for attribution.
 
-## Original work
+Share-code format: `src/Smoother.Core/ConfigCode.cs`, including raw/deflated markers,
+field order, base64url encoding and checksum. No license keys or machine-local settings
+are exported. Preview artwork belongs to its respective owner, including Grinding Gear Games.
 
-smoothtato-dev/assets/skin_catalog.json. The included catalogue is a small metadata excerpt.
-
-## This repository's example
-
-Catalogue metadata and a dry-run planner. No game bundles or paid cosmetic assets are distributed.
-
-The example was built for public inspection of the documented workflow. It is not a claim
-that the complete production application fits into this one module. Existing repository
-source retains its original history. Generated records have no customer, player, account,
-or private-message identifiers. Inputs and outputs can be exported and inspected.
+Mapping confidence is copied from the app catalogue. It does not independently establish
+compatibility with the user's current game version. The browser does not write game files.

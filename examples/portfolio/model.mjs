@@ -1,58 +1,6 @@
-// catalogue.json is extracted from the existing application at release time.
-export const defaults = {
-  skill: "ancestral_call",
-  effect: "celestial_ancestral_call_effect",
-  catalogue: [],
-};
-export const controls = [
-  { key: "skill", label: "Base skill", type: "select", options: [] },
-  { key: "effect", label: "Catalogue effect", type: "select", options: [] },
-];
-export function plan(catalogue, skill, effect) {
-  const entry = catalogue.find((r) => r.Key === effect);
-  if (!entry)
-    return {
-      valid: false,
-      reason: "Effect not in this catalogue excerpt.",
-      pairs: [],
-    };
-  if (entry.Skill !== skill)
-    return {
-      valid: false,
-      reason: `This effect belongs to ${entry.SkillDisplay}, not ${skill}.`,
-      pairs: [],
-    };
-  if (!entry.Pairs.length || entry.Pairs.some((p) => !p.Base || !p.Mtx))
-    return { valid: false, reason: "Incomplete asset mapping.", pairs: [] };
-  return {
-    valid: true,
-    reason: "Skill matches; every asset pair is complete.",
-    pairs: entry.Pairs,
-    name: entry.SkinName,
-  };
-}
-export function run(i) {
-  const r = plan(i.catalogue, i.skill, i.effect);
-  return {
-    summary: r.valid ? r.name : "Selection needs changing",
-    metrics: {
-      compatible: r.valid ? "yes" : "no",
-      "mapped assets": r.pairs.length,
-      "catalogue entries": i.catalogue.length,
-    },
-    columns: ["base asset", "replacement asset"],
-    rows: r.pairs.map((p) => [p.Base, p.Mtx]),
-    steps: [
-      "Choose a base skill",
-      "Look up its cosmetic catalogue entry",
-      r.reason,
-      "Export the validated replacement plan",
-    ],
-    artifact: r,
-    extra: i.catalogue.map((r) => ({
-      skill: r.Skill,
-      effect: r.Key,
-      name: r.SkinName,
-    })),
-  };
-}
+const alphabet='ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789-_';
+export function checksum(s){return alphabet[[...s].reduce((n,c)=>(n+c.charCodeAt(0))&63,0)]}
+export function conflicts(items){const paths=new Map(),found=[];for(const item of items)for(const p of item.Pairs||[]){if(paths.has(p.Base)&&paths.get(p.Base).target!==p.Mtx)found.push({path:p.Base,first:paths.get(p.Base).key,second:item.Key});paths.set(p.Base,{target:p.Mtx,key:item.Key})}return found}
+export function encode(items){if(conflicts(items).length)throw Error('Two effects overwrite the same base asset. Remove one first.');const body=['normal','','',items.map(i=>i.Key).join(',')].join('\n'),bytes=new TextEncoder().encode('R'+body),text=btoa(String.fromCharCode(...bytes)).replaceAll('+','-').replaceAll('/','_').replace(/=+$/,'');return 'STATO1-'+text+checksum(text)}
+export async function decode(code){const match=code.trim().match(/STATO1-([A-Za-z0-9_-]+)/i);if(!match)throw Error('Expected a STATO1 config code');const text=match[1].slice(0,-1);if(checksum(text)!==match[1].at(-1))throw Error('Config checksum failed');const bytes=Uint8Array.from(atob(text.replaceAll('-','+').replaceAll('_','/')),c=>c.charCodeAt(0));let body;if(bytes[0]===82)body=new TextDecoder().decode(bytes.slice(1));else if(bytes[0]===68){const stream=new Blob([bytes.slice(1)]).stream().pipeThrough(new DecompressionStream('deflate-raw'));body=await new Response(stream).text()}else throw Error('Unknown config format');const fields=body.split('\n');return {mode:fields[0],skins:(fields[3]||'').split(',').filter(Boolean)}}
+export function select(items,item){return [...items.filter(i=>i.Skill!==item.Skill&&i.Key!==item.Key),item]}
