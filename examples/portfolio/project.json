@@ -1,0 +1,11 @@
+{
+  "id": "mtxtato",
+  "repo": "mtxtato-catalogue",
+  "title": "mtxtato",
+  "caption": "Matches skills with compatible cosmetic effects and keeps the swaps organised.",
+  "workflow": "Browse the effect catalogue, match an effect to its base skill and build the asset replacement plan. Compatibility checks keep a cosmetic selection tied to the skill it belongs to.",
+  "benefit": "Same skill. A completely different wardrobe.",
+  "demo": "Choose a skill and catalogue entry; inspect validated swap pairs or an incompatibility result.",
+  "source": "smoothtato-dev/assets/skin_catalog.json. The included catalogue is a small metadata excerpt.",
+  "boundary": "Catalogue metadata and a dry-run planner. No game bundles or paid cosmetic assets are distributed."
+}
