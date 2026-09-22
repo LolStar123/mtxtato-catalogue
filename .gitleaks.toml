@@ -1,0 +1,13 @@
+[extend]
+useDefault = true
+
+[[allowlists]]
+description = "Verified public skill-effect identifiers, not account credentials"
+regexTarget = "secret"
+regexes = [
+  '^strike_1h_dual_strike$',
+  '^gap_bladeflurry_gloom_slash01_ao$',
+  '^gap_bladeflurry_gloom_slash02_ao$',
+  '^gap_ground_slam_blood_slam1$',
+  '^gap_discharge_celestial2$'
+]
