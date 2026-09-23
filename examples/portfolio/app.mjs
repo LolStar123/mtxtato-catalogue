@@ -41,13 +41,15 @@ function render() {
         `${filtered.length} effects / page ${page + 1} of ${pages}`;
     $("#prev").disabled = page === 0;
     $("#next").disabled = page === pages - 1;
-    $("#catalogue").innerHTML = filtered
-        .slice(page * size, (page + 1) * size)
-        .map(
-            (r) =>
-                `<button class="effect" data-key="${esc(r.Key)}" aria-pressed="${selected?.Key === r.Key}">${image(r)}<span>${esc(r.FullName)}</span><small>${esc(r.SkillDisplay || r.Skill)}</small></button>`,
-        )
-        .join("");
+    $("#catalogue").innerHTML =
+        filtered
+            .slice(page * size, (page + 1) * size)
+            .map(
+                (r) =>
+                    `<button class="effect" data-key="${esc(r.Key)}" aria-pressed="${selected?.Key === r.Key}">${image(r)}<span>${esc(r.FullName)}</span><small>${esc(r.SkillDisplay || r.Skill)}</small></button>`,
+            )
+            .join("") ||
+        "<p>No effects match. Clear the search or choose all skills.</p>";
     window.__mtx = {
         ready: true,
         total: data.length,
@@ -96,7 +98,11 @@ function basket() {
 }
 $("#catalogue").onclick = (e) => {
     const b = e.target.closest("[data-key]");
-    if (b) inspect(data.find((r) => r.Key === b.dataset.key));
+    if (b) {
+        inspect(data.find((r) => r.Key === b.dataset.key));
+        if (matchMedia("(max-width: 850px)").matches)
+            $("#effect-desk").scrollIntoView({ block: "start" });
+    }
 };
 $("#add").onclick = () => {
     chosen = select(chosen, selected);

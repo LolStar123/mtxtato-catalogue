@@ -25,6 +25,10 @@
                 </div>
                 <p id="summary">loading the wardrobe...</p>
             </div>
+            <p class="journey">
+                Choose a skill, pick an effect, then add it to your loadout.
+                Export the code for the desktop app.
+            </p>
             <div class="filters">
                 <label
                     >search<input
@@ -36,7 +40,7 @@
                         <option value="">all skills</option>
                     </select></label
                 ><label
-                    >mapping evidence<select id="confidence">
+                    >compatibility evidence<select id="confidence">
                         <option value="">all entries</option>
                         <option>HIGH</option>
                         <option>MEDIUM</option>
@@ -55,7 +59,10 @@
                     </div>
                     <div id="catalogue"></div>
                 </section>
-                <aside>
+                <aside id="effect-desk">
+                    <a class="back-to-catalogue" href="#catalogue"
+                        >back to effects</a
+                    >
                     <h2 id="effect-title">select an effect</h2>
                     <div id="preview"></div>
                     <p id="blurb"></p>

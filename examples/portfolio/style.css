@@ -296,3 +296,20 @@ footer {
         gap: 12px;
     }
 }
+
+.journey {
+    color: var(--muted);
+    max-width: 800px;
+}
+.back-to-catalogue {
+    display: none;
+}
+#effect-desk {
+    scroll-margin-top: 18px;
+}
+@media (max-width: 850px) {
+    .back-to-catalogue {
+        display: inline-block;
+        margin-bottom: 15px;
+    }
+}

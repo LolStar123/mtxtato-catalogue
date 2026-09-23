@@ -35,6 +35,10 @@ try:
         page.screenshot(path=str(ROOT/'examples/portfolio/preview.png'))
         page.set_viewport_size({'width':390,'height':844})
         assert page.evaluate('document.documentElement.scrollWidth<=innerWidth+1'),'mobile overflow'
+        page.locator('#catalogue [data-key]').first.click()
+        assert page.locator('#effect-title').bounding_box()['y'] < 500
+        page.locator('.back-to-catalogue').click()
+        page.wait_for_function('document.querySelector("#catalogue").getBoundingClientRect().top < 100')
         assert not errors,errors
         print('PASS: full catalogue, search, selection, real preview, STATO1 export/import and mobile')
         browser.close()
