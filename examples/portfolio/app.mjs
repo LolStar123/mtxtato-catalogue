@@ -20,7 +20,7 @@ const size = 36;
 function image(r) {
     return r.icon
         ? `<img src="${esc(r.icon)}" alt="${esc(r.FullName)}" loading="lazy">`
-        : '<span class="no-art">no preview in catalogue</span>';
+        : '<span class="no-art">No preview</span>';
 }
 function render() {
     const q = $("#search").value.toLowerCase(),
@@ -38,7 +38,7 @@ function render() {
         pages = Math.max(1, Math.ceil(filtered.length / size));
     page = Math.min(page, pages - 1);
     $("#count").textContent =
-        `${filtered.length} effects / page ${page + 1} of ${pages}`;
+        `${filtered.length} effects · ${page + 1}/${pages}`;
     $("#prev").disabled = page === 0;
     $("#next").disabled = page === pages - 1;
     $("#catalogue").innerHTML =
@@ -49,7 +49,7 @@ function render() {
                     `<button class="effect" data-key="${esc(r.Key)}" aria-pressed="${selected?.Key === r.Key}">${image(r)}<span>${esc(r.FullName)}</span><small>${esc(r.SkillDisplay || r.Skill)}</small></button>`,
             )
             .join("") ||
-        "<p>No effects match. Clear the search or choose all skills.</p>";
+        "<p>No matches.</p>";
     window.__mtx = {
         ready: true,
         total: data.length,
@@ -84,10 +84,8 @@ function basket() {
         .join("");
     $("#export").disabled = !chosen.length || !!clashes.length;
     $("#status").textContent = clashes.length
-        ? "Two selections target the same base asset. Remove a conflicting effect before exporting."
-        : chosen.length
-          ? "One effect per skill. The exported code contains only this skill-effect loadout."
-          : "Pick an effect to start a loadout.";
+        ? "Asset conflict; remove an effect to export."
+        : "";
     try {
         localStorage.setItem(
             "mtxtato-loadout",
@@ -138,7 +136,7 @@ $("#export").onclick = () => {
         a.click();
         setTimeout(() => URL.revokeObjectURL(url), 1000);
         $("#status").textContent =
-            "Exported a STATO1 code. Import it through the application config-code field.";
+            "STATO1 exported.";
     } catch (e) {
         $("#status").textContent = e.message;
     }
@@ -149,14 +147,14 @@ $("#import").onclick = async () => {
             known = decoded.skins.map((key) => data.find((r) => r.Key === key));
         if (known.some((r) => !r))
             throw Error(
-                "This code contains effects outside this skill catalogue; it has not been imported.",
+                "Unknown catalogue effects; import rejected.",
             );
         chosen = known;
         basket();
         $("#status").textContent =
             "Loaded " +
             chosen.length +
-            " skill effects. Other settings from the source code are not imported here.";
+            " skill effects; other settings excluded.";
     } catch (e) {
         $("#status").textContent = e.message;
     }
@@ -175,8 +173,7 @@ try {
         skills
             .map(([k, v]) => `<option value="${esc(k)}">${esc(v)}</option>`)
             .join("");
-    $("#summary").textContent =
-        `${data.length.toLocaleString()} effects / ${skills.length} skills / real app mappings`;
+    $("#summary").textContent = "";
     try {
         chosen = JSON.parse(localStorage.getItem("mtxtato-loadout") || "[]")
             .map((key) => data.find((r) => r.Key === key))

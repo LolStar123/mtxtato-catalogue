@@ -6,7 +6,7 @@
     /><title>mtxtato / effect wardrobe</title
     ><link rel="stylesheet" href="legacy.css" />
     <body>
-<p class="archive-notice">Preserved standalone version. <a href="https://lolstar123.github.io/smoothtato-preview/cosmetics/">Open the current combined app</a>.</p>
+<p class="archive-notice">Archive · <a href="https://lolstar123.github.io/smoothtato-preview/cosmetics/">Current app</a>.</p>
         <header>
             <a href="https://poetato.app">poetato / mtxtato</a>
             <nav>
@@ -14,22 +14,17 @@
                     >code</a
                 ><a
                     href="https://lolstar123.github.io/just-a-little-further/"
-                    >atul's projects</a
+                    >projects</a
                 >
             </nav>
         </header>
         <main>
             <div class="title">
                 <div>
-                    <p class="eyebrow">the actual effect catalogue</p>
-                    <h1>mtxtato / skill effect catalogue</h1>
+                    <h1>mtxtato</h1>
                 </div>
-                <p id="summary">loading the wardrobe...</p>
+                <p id="summary">Loading…</p>
             </div>
-            <p class="journey">
-                Choose a skill, pick an effect, then add it to your loadout.
-                Export the code for the desktop app.
-            </p>
             <div class="filters">
                 <label
                     >search<input
@@ -41,7 +36,7 @@
                         <option value="">all skills</option>
                     </select></label
                 ><label
-                    >compatibility evidence<select id="confidence">
+                    >confidence<select id="confidence">
                         <option value="">all entries</option>
                         <option>HIGH</option>
                         <option>MEDIUM</option>
@@ -62,39 +57,33 @@
                 </section>
                 <aside id="effect-desk">
                     <a class="back-to-catalogue" href="#catalogue"
-                        >back to effects</a
+                        >effects</a
                     >
-                    <h2 id="effect-title">select an effect</h2>
+                    <h2 id="effect-title">Select effect</h2>
                     <div id="preview"></div>
                     <p id="blurb"></p>
                     <p id="evidence"></p>
-                    <button id="add">add to the loadout</button>
-                    <h3>your loadout <span id="loadout-count">0</span></h3>
+                    <button id="add">Add</button>
+                    <h3>Loadout <span id="loadout-count">0</span></h3>
                     <div id="loadout"></div>
                     <p id="status" role="status"></p>
-                    <button id="export">export app config code</button>
+                    <button id="export">Export STATO1</button>
                     <details>
-                        <summary>import an existing code</summary>
+                        <summary>Import</summary>
                         <label
-                            >paste a STATO1 code<textarea
+                            >STATO1 code<textarea
                                 id="import-code"
                                 rows="4"
                             ></textarea></label
-                        ><button id="import">load its skill effects</button>
+                        ><button id="import">Import effects</button>
                     </details>
                     <details>
-                        <summary>inspect asset mappings</summary>
+                        <summary>Mappings</summary>
                         <pre id="pairs"></pre>
                     </details>
                 </aside>
             </div>
-            <footer>
-                This browser plans a skill-effect loadout and exports the app's
-                STATO1 share-code format. It does not patch game files. Mapping
-                confidence comes from the actual app catalogue; it is not a
-                guarantee that an effect works on every game version. Preview
-                artwork belongs to its respective owner.
-            </footer>
+            <footer>Catalogue confidence; game-version compatibility unverified. Preview artwork © respective owners. <a href="https://github.com/LolStar123/mtxtato-catalogue#checks-and-limits">Method</a></footer>
         </main>
         <script type="module" src="app.mjs"></script>
     </body>
